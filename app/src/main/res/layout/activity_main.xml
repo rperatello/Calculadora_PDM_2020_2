@@ -4,14 +4,16 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginLeft="4dp"
+    android:layout_marginRight="4dp"
     tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/visorTv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:textSize="25sp"
+        android:layout_height="60dp"
+        android:gravity="right"
+        android:textSize="45sp"
         android:text="" />
 
     <LinearLayout
@@ -20,28 +22,28 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/l1zeroBt"
+            android:id="@+id/oneBt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="onClick"
-            android:text="@string/l1zero" />
+            android:text="@string/one" />
 
         <Button
-            android:id="@+id/l1umBt"
+            android:id="@+id/twoBt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="onClick"
-            android:text="@string/l1um" />
+            android:text="@string/two" />
 
         <Button
-            android:id="@+id/l1doisBt"
+            android:id="@+id/threeBt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="onClick"
-            android:text="@string/l1dois" />
+            android:text="@string/three" />
 
     </LinearLayout>
 
@@ -51,28 +53,28 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/l2zeroBt"
+            android:id="@+id/fourBt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="onClick"
-            android:text="@string/l2zero" />
+            android:text="@string/four" />
 
         <Button
-            android:id="@+id/l2umBt"
+            android:id="@+id/fiveBt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="onClick"
-            android:text="@string/l2um" />
+            android:text="@string/five" />
 
         <Button
-            android:id="@+id/l2doisBt"
+            android:id="@+id/sixBt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="onClick"
-            android:text="@string/l2dois" />
+            android:text="@string/six" />
 
     </LinearLayout>
 
@@ -82,36 +84,53 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/l3zeroBt"
+            android:id="@+id/sevenBt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="onClick"
-            android:text="@string/l3zero" />
+            android:text="@string/seven" />
 
         <Button
-            android:id="@+id/l3umBt"
+            android:id="@+id/eightBt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="onClick"
-            android:text="@string/l3um" />
+            android:text="@string/eight" />
 
         <Button
-            android:id="@+id/l3doisBt"
+            android:id="@+id/nineBt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="onClick"
-            android:text="@string/l3dois" />
+            android:text="@string/nine" />
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/limparBt"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="onClick"
-        android:text="@string/limpar" />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/zeroBt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onClick"
+            android:text="@string/zero" />
+
+        <Button
+            android:id="@+id/limparBt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:layout_marginLeft="10dp"
+            android:onClick="onClick"
+            android:text="@string/limpar" />
+    </LinearLayout>
+
 
 </LinearLayout>
