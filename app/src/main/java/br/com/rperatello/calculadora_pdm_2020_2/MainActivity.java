@@ -15,9 +15,40 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.v(getString(R.string.app_name), "onCreate executado - iniciado ciclo completo");
         setContentView(R.layout.activity_main);
         visorTv = findViewById(R.id.visorTv);
         visorTv.setText(getString(R.string.zero));
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.v(getString(R.string.app_name), "onStart executado - iniciado ciclo visível");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.v(getString(R.string.app_name), "onStop executado - finalizado ciclo visível");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.v(getString(R.string.app_name), "onDestroy executado - finalizado ciclo completo");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.v(getString(R.string.app_name), "onPause executado - finalizado ciclo em primeiro plano");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.v(getString(R.string.app_name), "onResume executado - iniciado ciclo em primeiro plano");
     }
 
     public void fillDisplay(String value){
