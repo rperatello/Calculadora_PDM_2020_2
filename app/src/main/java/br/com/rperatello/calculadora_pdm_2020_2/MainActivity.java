@@ -13,8 +13,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView visorTv;
     private String value = "";
 
-    //constante_visor
-    //private final VALOR_VISOR_TV =
+    //constante_para salvamento/restauração da variável de instãncia
+    private final String VALOR_VISOR_TV = "VALOR_VISOR_TV";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +33,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        Log.v(getString(R.string.app_name), "onResume executado - iniciado ciclo em primeiro plano");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.v(getString(R.string.app_name), "onPause executado - finalizado ciclo em primeiro plano");
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
         Log.v(getString(R.string.app_name), "onStop executado - finalizado ciclo visível");
@@ -45,30 +57,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        Log.v(getString(R.string.app_name), "onPause executado - finalizado ciclo em primeiro plano");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.v(getString(R.string.app_name), "onResume executado - iniciado ciclo em primeiro plano");
-    }
-
-    @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         Log.v(getString(R.string.app_name), "onSaveInstanceState executado - salvando dados de instância");
-        outState.putString(value, visorTv.getText().toString());
+        outState.putString(VALOR_VISOR_TV, visorTv.getText().toString());
     }
 
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         Log.v(getString(R.string.app_name), "onRestoreInstanceState executado - restaurando dados de instância");
-        visorTv.setText(savedInstanceState.getString(value, "0"));
+        visorTv.setText(savedInstanceState.getString(VALOR_VISOR_TV, getString(R.string.zero)));
     }
+
+
 
     public void fillDisplay(String value){
         this.value = value;
