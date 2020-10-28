@@ -1,5 +1,6 @@
 package br.com.rperatello.calculadora_pdm_2020_2;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -12,13 +13,17 @@ public class MainActivity extends AppCompatActivity {
     private TextView visorTv;
     private String value = "";
 
+    //constante_visor
+    //private final VALOR_VISOR_TV =
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.v(getString(R.string.app_name), "onCreate executado - iniciado ciclo completo");
         setContentView(R.layout.activity_main);
         visorTv = findViewById(R.id.visorTv);
-        visorTv.setText(getString(R.string.zero));
+        if(savedInstanceState == null)
+            visorTv.setText(getString(R.string.zero));
     }
 
     @Override
@@ -49,6 +54,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Log.v(getString(R.string.app_name), "onResume executado - iniciado ciclo em primeiro plano");
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.v(getString(R.string.app_name), "onSaveInstanceState executado - salvando dados de instância");
+        outState.putString(value, visorTv.getText().toString());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        Log.v(getString(R.string.app_name), "onRestoreInstanceState executado - restaurando dados de instância");
+        visorTv.setText(savedInstanceState.getString(value, "0"));
     }
 
     public void fillDisplay(String value){
