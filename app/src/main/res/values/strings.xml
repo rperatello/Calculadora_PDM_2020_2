@@ -12,5 +12,12 @@
     <string name="seven">7</string>
     <string name="eight">8</string>
     <string name="nine">9</string>
-    <string name="limpar">limpar</string>
+    <string name="limpar">C</string>
+    <string name="sair">Sair</string>
+    <string name="sum">+</string>
+    <string name="sub">-</string>
+    <string name="div">/</string>
+    <string name="point">.</string>
+    <string name="mult">X</string>
+    <string name="res">=</string>
 </resources>

@@ -12,9 +12,100 @@ public class MainActivity extends AppCompatActivity {
     // referência para os objetos Button definidos no leiaute
     private TextView visorTv;
     private String value = "";
+    private Double result = 0.0;
+    private String op = "";
 
     //constante_para salvamento/restauração da variável de instãncia
     private final String VALOR_VISOR_TV = "VALOR_VISOR_TV";
+
+    protected void calcuteResult() {
+        if (!visorTv.getText().equals("0")){
+            switch (this.op) {
+                case "+":
+                    this.result = result + Double.parseDouble(visorTv.getText().toString());
+                    visorTv.setText(this.result.toString());
+                    this.result = 0.0;
+                    break;
+                case "-":
+                    this.result = result - Double.parseDouble(visorTv.getText().toString());
+                    visorTv.setText(this.result.toString());
+                    this.result = 0.0;
+                    break;
+                case "X":
+                    this.result = result * Double.parseDouble(visorTv.getText().toString());
+                    visorTv.setText(this.result.toString());
+                    this.result = 0.0;
+                    break;
+                case "/":
+                    this.result = result / Double.parseDouble(visorTv.getText().toString());
+                    visorTv.setText(this.result.toString());
+                    this.result = 0.0;
+                    break;
+            }
+        } else {
+            return;
+        }
+    }
+
+    protected void sum(){
+        if (!visorTv.getText().toString().equals("") && result == 0.0) {
+            result = result + Double.parseDouble(visorTv.getText().toString());
+        } else if (!visorTv.getText().toString().equals("") && result != 0.0 && op.equals("=")) {
+            result = Double.parseDouble(visorTv.getText().toString());
+        } else if (!visorTv.getText().toString().equals("") && result != 0.0 && op.equals("+")) {
+            result = result + Double.parseDouble(visorTv.getText().toString());
+        } else {
+            this.fillDisplay(String.valueOf(result));
+        }
+        op = getString(R.string.sum);
+        fillDisplay(getString(R.string.zero));
+    }
+
+    protected void sub(){
+        if (!visorTv.getText().toString().equals("") && result == 0.0) {
+            result = result + Double.parseDouble(visorTv.getText().toString());
+        } else if (!visorTv.getText().toString().equals("") && result != 0.0 && op.equals("=")) {
+            result = Double.parseDouble(visorTv.getText().toString());
+        } else if (!visorTv.getText().toString().equals("") && result != 0.0 && op.equals("-")) {
+            result = result - Double.parseDouble(visorTv.getText().toString());
+        } else {
+            this.fillDisplay(String.valueOf(result));
+        }
+        op = getString(R.string.sub);
+        fillDisplay(getString(R.string.zero));
+    }
+
+    protected void mult(){
+        if (!visorTv.getText().toString().equals("") && result == 0.0) {
+            result = result + Double.parseDouble(visorTv.getText().toString());
+        } else if (!visorTv.getText().toString().equals("") && result != 0.0 && op.equals("=")) {
+            result = Double.parseDouble(visorTv.getText().toString());
+        } else if (!visorTv.getText().toString().equals("") && result != 0.0 && op.equals("X")) {
+            result = result * Double.parseDouble(visorTv.getText().toString());
+        } else {
+            this.fillDisplay(String.valueOf(result));
+        }
+        op = getString(R.string.mult);
+        fillDisplay(getString(R.string.zero));
+    }
+
+    protected void div(){
+        if (!visorTv.getText().toString().equals("") && result == 0.0) {
+            result = result + Double.parseDouble(visorTv.getText().toString());
+        } else if (!visorTv.getText().toString().equals("") && result != 0.0 && op.equals("=")) {
+            result = Double.parseDouble(visorTv.getText().toString());
+        } else if (!visorTv.getText().toString().equals("") && result != 0.0 && op.equals("/")) {
+            try {
+            result = result / Double.parseDouble(visorTv.getText().toString());
+            } catch (Exception error){
+                fillDisplay("Erro");
+            }
+        } else {
+            this.fillDisplay(String.valueOf(result));
+        }
+        op = getString(R.string.div);
+        fillDisplay(getString(R.string.zero));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +158,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         Log.v(getString(R.string.app_name), "onRestoreInstanceState executado - restaurando dados de instância");
-        visorTv.setText(savedInstanceState.getString(VALOR_VISOR_TV, getString(R.string.zero)));
+        //visorTv.setText(savedInstanceState.getString(VALOR_VISOR_TV, getString(R.string.zero)));
+        fillDisplay(savedInstanceState.getString(VALOR_VISOR_TV, getString(R.string.zero)));
+        result = savedInstanceState.getDouble(String.valueOf(result), 0.0);
+        op = savedInstanceState.getString(op, "");
     }
 
 
@@ -145,16 +239,33 @@ public class MainActivity extends AppCompatActivity {
                     fillDisplay( value + (getString(R.string.eight)));
                 }
                 break;
-            case R.id.nineBt:
+            case R.id.pointBt:
                 if(value.equals("0")){
-                    fillDisplay(getString(R.string.nine));
+                    fillDisplay("0.");
+                } else if(value.contains(".")){
+                    fillDisplay(value);
                 } else {
-                    fillDisplay( value + (getString(R.string.nine)));
+                    fillDisplay( value + (getString(R.string.point)));
                 }
                 break;
-            //linha 4
             case R.id.limparBt:
                 fillDisplay(getString(R.string.zero));
+                this.result = 0.0;
+                break;
+            case R.id.sumBt:
+                this.sum();
+                break;
+            case R.id.subBt:
+                this.sub();
+                break;
+            case R.id.multBt:
+                this.mult();
+                break;
+            case R.id.divBt:
+                this.div();
+                break;
+            case R.id.resBt:
+                this.calcuteResult();
                 break;
         }
     }

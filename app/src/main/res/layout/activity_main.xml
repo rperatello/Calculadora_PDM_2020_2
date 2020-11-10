@@ -45,6 +45,14 @@
             android:onClick="onClick"
             android:text="@string/three" />
 
+        <Button
+            android:id="@+id/sumBt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onClick"
+            android:text="@string/sum" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -75,6 +83,14 @@
             android:layout_weight="1"
             android:onClick="onClick"
             android:text="@string/six" />
+
+        <Button
+            android:id="@+id/subBt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onClick"
+            android:text="@string/sub" />
 
     </LinearLayout>
 
@@ -107,12 +123,28 @@
             android:onClick="onClick"
             android:text="@string/nine" />
 
+        <Button
+            android:id="@+id/divBt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onClick"
+            android:text="@string/div" />
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/pointBt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onClick"
+            android:text="@string/point" />
 
         <Button
             android:id="@+id/zeroBt"
@@ -126,10 +158,33 @@
             android:id="@+id/limparBt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
             android:onClick="onClick"
             android:text="@string/limpar" />
+
+        <Button
+            android:id="@+id/multBt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onClick"
+            android:text="@string/mult" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/resBt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onClick"
+            android:text="@string/res" />
+
     </LinearLayout>
 
 
