@@ -5,13 +5,28 @@
     <item
         android:id="@+id/configuracoesMI"
         android:title="Configurações"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_configuracoes"
+        android:orderInCategory="1" />
+
+    <item
+        android:id="@+id/chamarIFSPMi"
+        android:title="@string/chamar_ifsp"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_chamar"
+        android:orderInCategory="1" />
+
+    <item
+        android:id="@+id/siteIFSPMi"
+        android:title="@string/site_ifsp"
         app:showAsAction="never"
-        android:orderInCategory="1"/>
+        android:orderInCategory="1" />
 
     <item
         android:id="@+id/sairMI"
         android:title="@string/sair"
         app:showAsAction="never"
+        android:icon="@drawable/ic_sair"
         android:orderInCategory="2"/>
 
 </menu>

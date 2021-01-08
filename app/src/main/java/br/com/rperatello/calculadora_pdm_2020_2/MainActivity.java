@@ -1,12 +1,21 @@
 package br.com.rperatello.calculadora_pdm_2020_2;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     // referência para os objetos Button definidos no leiaute
@@ -18,7 +27,17 @@ public class MainActivity extends AppCompatActivity {
     //constante_para salvamento/restauração da variável de instãncia
     private final String VALOR_VISOR_TV = "VALOR_VISOR_TV";
 
-    protected void calcuteResult() {
+    // Constantes para solicitação de permissões
+    private final int CALL_PHONE_PERMISSION_REQUEST_CODE = 0;
+    private final int CONFIGURACOES_REQUEST_CODE = 1;
+
+    // Constante para o envio de parâmetros para a ConfiguracoesActivity
+    public static final String EXTRA_CONFIGURACOES = "EXTRA_CONFIGURACOES";
+
+    // Referência para objeto que armazena as configurações
+    private Configuracoes configuracoes = new Configuracoes(false);
+
+    protected void calculateResult() {
         if (!visorTv.getText().equals("0")){
             switch (this.op) {
                 case "+":
@@ -112,9 +131,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Log.v(getString(R.string.app_name), "onCreate executado - iniciado ciclo completo");
         setContentView(R.layout.activity_main);
+
         visorTv = findViewById(R.id.visorTv);
-        if(savedInstanceState == null)
-            visorTv.setText(getString(R.string.zero));
+        if(savedInstanceState != null){
+            //visorTv.setText(getString(R.string.zero));
+            visorTv.setText(savedInstanceState.getString(VALOR_VISOR_TV, "0"));
+        }
+
+//        getSupportActionBar().setSubtitle("Tela Principal");
+
     }
 
     @Override
@@ -152,6 +177,8 @@ public class MainActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         Log.v(getString(R.string.app_name), "onSaveInstanceState executado - salvando dados de instância");
         outState.putString(VALOR_VISOR_TV, visorTv.getText().toString());
+        outState.putDouble(String.valueOf(result), result);
+        outState.putString(String.valueOf(op), op);
     }
 
     @Override
@@ -164,7 +191,97 @@ public class MainActivity extends AppCompatActivity {
         op = savedInstanceState.getString(op, "");
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.configuracoesMI:
+//                Intent configuracoesIntent = new Intent(this, ConfiguracoesActivity.class);
+//                startActivity(configuracoesIntent);
+                Intent configuracoesIntent = new Intent("CONFIGURACOES");
+                configuracoesIntent.putExtra(EXTRA_CONFIGURACOES, configuracoes);
+                startActivityForResult(configuracoesIntent, CONFIGURACOES_REQUEST_CODE);
+                return true;
+
+            case R.id.siteIFSPMi:
+                Uri site = Uri.parse("http://www.ifsp.edu.br");
+                Intent siteIf = new Intent(Intent.ACTION_VIEW, site);
+                startActivity(siteIf);
+                return true;
+
+            case R.id.chamarIFSPMi:
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                    if (checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
+                        Log.v(getString(R.string.app_name), "pronto para chamar requestPermission");
+                        requestPermissions(new String[] {Manifest.permission.CALL_PHONE}, CALL_PHONE_PERMISSION_REQUEST_CODE);
+                    }
+                }
+                Log.v(getString(R.string.app_name), "pronto para chamarIfsp");
+                chamarIfsp();
+                return true;
+
+            case R.id.sairMI:
+                finish();
+                return true;
+
+            default:
+                return false;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == CALL_PHONE_PERMISSION_REQUEST_CODE){
+            for (int resultado: grantResults) {
+                if (resultado != PackageManager.PERMISSION_GRANTED){
+                    Toast.makeText(this, "Permissão necessária não concedida", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }
+            chamarIfsp();
+        }
+    }
+
+    private void chamarIfsp() {
+        // Coloquei um ACTION_DIAL para que funcione em versões anteriores da 23.
+        Uri phone = Uri.parse("tel:1137754501");
+        Log.v(getString(R.string.app_name), "pronto para discar");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            if(checkSelfPermission(Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED){
+                Intent chamarIfIntent = new Intent(Intent.ACTION_CALL, phone);
+                startActivity(chamarIfIntent);
+            }
+        }
+        else {
+            try {
+                Intent chamarIfIntent = new Intent(Intent.ACTION_DIAL, phone);
+                startActivity(chamarIfIntent);
+            }
+            catch(Exception e) {
+                Toast.makeText(this, "Permissão necessária não concedida", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == CONFIGURACOES_REQUEST_CODE && resultCode == RESULT_OK && data != null){
+            configuracoes = data.getParcelableExtra(EXTRA_CONFIGURACOES);
+            if (configuracoes != null && configuracoes.getAvancada()){
+                findViewById(R.id.raizQuadradaBt).setVisibility(View.VISIBLE);
+            }
+            else {
+                findViewById(R.id.raizQuadradaBt).setVisibility(View.GONE);
+            }
+        }
+    }
 
     public void fillDisplay(String value){
         this.value = value;
@@ -265,7 +382,7 @@ public class MainActivity extends AppCompatActivity {
                 this.div();
                 break;
             case R.id.resBt:
-                this.calcuteResult();
+                this.calculateResult();
                 break;
         }
     }

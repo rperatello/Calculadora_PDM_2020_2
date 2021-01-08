@@ -12,7 +12,7 @@
     <string name="seven">7</string>
     <string name="eight">8</string>
     <string name="nine">9</string>
-    <string name="limpar">C</string>
+    <string name="limpar">Limpar</string>
     <string name="sair">Sair</string>
     <string name="sum">+</string>
     <string name="sub">-</string>
@@ -20,4 +20,11 @@
     <string name="point">.</string>
     <string name="mult">X</string>
     <string name="res">=</string>
+    <string name="site_ifsp">Site IFSP</string>
+    <string name="tipo_calculadora">Tipo calculadora</string>
+    <string name="avancada">Avançada</string>
+    <string name="basica">Básica</string>
+    <string name="salvar">Salvar</string>
+    <string name="chamar_ifsp">Chamar IFSP</string>
+    <string name="raiz_quadrada">√</string>
 </resources>
