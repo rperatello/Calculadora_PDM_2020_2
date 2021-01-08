@@ -26,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
 
     //constante_para salvamento/restauração da variável de instãncia
     private final String VALOR_VISOR_TV = "VALOR_VISOR_TV";
+    private final String RESULT = "RESULT";
+    private final String OPERATION = "OPERATION";
+    private final String ADVANCED = "ADVANCED";
 
     // Constantes para solicitação de permissões
     private final int CALL_PHONE_PERMISSION_REQUEST_CODE = 0;
@@ -177,8 +180,9 @@ public class MainActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         Log.v(getString(R.string.app_name), "onSaveInstanceState executado - salvando dados de instância");
         outState.putString(VALOR_VISOR_TV, visorTv.getText().toString());
-        outState.putDouble(String.valueOf(result), result);
-        outState.putString(String.valueOf(op), op);
+        outState.putDouble(RESULT, result);
+        outState.putString(OPERATION, op);
+        outState.putBoolean(ADVANCED, configuracoes.getAvancada());
     }
 
     @Override
@@ -187,8 +191,12 @@ public class MainActivity extends AppCompatActivity {
         Log.v(getString(R.string.app_name), "onRestoreInstanceState executado - restaurando dados de instância");
         //visorTv.setText(savedInstanceState.getString(VALOR_VISOR_TV, getString(R.string.zero)));
         fillDisplay(savedInstanceState.getString(VALOR_VISOR_TV, getString(R.string.zero)));
-        result = savedInstanceState.getDouble(String.valueOf(result), 0.0);
-        op = savedInstanceState.getString(op, "");
+        result = savedInstanceState.getDouble(RESULT, 0.0);
+        op = savedInstanceState.getString(OPERATION, "");
+        if(savedInstanceState.getBoolean(ADVANCED) && configuracoes != null){
+            configuracoes.setAvancada(true);
+            findViewById(R.id.raizQuadradaBt).setVisibility(View.VISIBLE);
+        };
     }
 
     @Override
@@ -340,7 +348,6 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     fillDisplay( value + (getString(R.string.six)));
                 }
-                Log.v(getString(R.string.app_name), getString(R.string.six));
                 break;
             case R.id.sevenBt:
                 if(value.equals("0")){
@@ -356,6 +363,13 @@ public class MainActivity extends AppCompatActivity {
                     fillDisplay( value + (getString(R.string.eight)));
                 }
                 break;
+            case R.id.nineBt:
+                if(value.equals("0")){
+                    fillDisplay(getString(R.string.nine));
+                } else {
+                    fillDisplay( value + (getString(R.string.nine)));
+                }
+                break;
             case R.id.pointBt:
                 if(value.equals("0")){
                     fillDisplay("0.");
@@ -364,6 +378,11 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     fillDisplay( value + (getString(R.string.point)));
                 }
+                break;
+            case R.id.raizQuadradaBt:
+                String res = String.valueOf(Math.pow(Double.parseDouble(visorTv.getText().toString()), (1.0/2)));
+                this.value = "0";
+                visorTv.setText(res);
                 break;
             case R.id.limparBt:
                 fillDisplay(getString(R.string.zero));
