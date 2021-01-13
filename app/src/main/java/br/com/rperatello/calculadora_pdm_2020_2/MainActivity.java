@@ -41,27 +41,42 @@ public class MainActivity extends AppCompatActivity {
     private Configuracoes configuracoes = new Configuracoes(false);
 
     protected void calculateResult() {
-        if (!visorTv.getText().equals("0")){
+        if (!visorTv.getText().equals("0") && !this.op.equals("")){
             switch (this.op) {
                 case "+":
                     this.result = result + Double.parseDouble(visorTv.getText().toString());
                     visorTv.setText(this.result.toString());
                     this.result = 0.0;
+                    this.value = "";
+                    this.op = "";
                     break;
                 case "-":
                     this.result = result - Double.parseDouble(visorTv.getText().toString());
                     visorTv.setText(this.result.toString());
                     this.result = 0.0;
+                    this.value = "";
+                    this.op = "";
                     break;
                 case "X":
                     this.result = result * Double.parseDouble(visorTv.getText().toString());
                     visorTv.setText(this.result.toString());
                     this.result = 0.0;
+                    this.value = "";
+                    this.op = "";
                     break;
                 case "/":
                     this.result = result / Double.parseDouble(visorTv.getText().toString());
                     visorTv.setText(this.result.toString());
                     this.result = 0.0;
+                    this.value = "";
+                    this.op = "";
+                    break;
+                case "^":
+                    this.result = Math.pow(result, Double.parseDouble(visorTv.getText().toString()));
+                    visorTv.setText(this.result.toString());
+                    this.result = 0.0;
+                    this.value = "";
+                    this.op = "";
                     break;
             }
         } else {
@@ -126,6 +141,24 @@ public class MainActivity extends AppCompatActivity {
             this.fillDisplay(String.valueOf(result));
         }
         op = getString(R.string.div);
+        fillDisplay(getString(R.string.zero));
+    }
+
+    protected void pot(){
+        if (!visorTv.getText().toString().equals("") && result == 0.0) {
+            result = result + Double.parseDouble(visorTv.getText().toString());
+        } else if (!visorTv.getText().toString().equals("") && result != 0.0 && op.equals("=")) {
+            result = Double.parseDouble(visorTv.getText().toString());
+        } else if (!visorTv.getText().toString().equals("") && result != 0.0 && op.equals("^")) {
+            try {
+                result = Math.pow(result, Double.parseDouble(visorTv.getText().toString()));
+            } catch (Exception error){
+                fillDisplay("Erro");
+            }
+        } else {
+            this.fillDisplay(String.valueOf(result));
+        }
+        op = getString(R.string.pot);
         fillDisplay(getString(R.string.zero));
     }
 
@@ -196,6 +229,7 @@ public class MainActivity extends AppCompatActivity {
         if(savedInstanceState.getBoolean(ADVANCED) && configuracoes != null){
             configuracoes.setAvancada(true);
             findViewById(R.id.raizQuadradaBt).setVisibility(View.VISIBLE);
+            findViewById(R.id.potenciaBt).setVisibility(View.VISIBLE);
         };
     }
 
@@ -284,9 +318,11 @@ public class MainActivity extends AppCompatActivity {
             configuracoes = data.getParcelableExtra(EXTRA_CONFIGURACOES);
             if (configuracoes != null && configuracoes.getAvancada()){
                 findViewById(R.id.raizQuadradaBt).setVisibility(View.VISIBLE);
+                findViewById(R.id.potenciaBt).setVisibility(View.VISIBLE);
             }
             else {
                 findViewById(R.id.raizQuadradaBt).setVisibility(View.GONE);
+                findViewById(R.id.potenciaBt).setVisibility(View.GONE);
             }
         }
     }
@@ -399,6 +435,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.divBt:
                 this.div();
+                break;
+            case R.id.potenciaBt:
+                this.pot();
                 break;
             case R.id.resBt:
                 this.calculateResult();

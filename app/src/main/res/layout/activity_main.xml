@@ -221,10 +221,22 @@
             android:text="@string/raiz_quadrada" />
 
         <Button
-            android:id="@+id/resBt"
+            android:id="@+id/potenciaBt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            android:onClick="onClick"
+            android:visibility="gone"
+            android:textAllCaps="false"
+            android:text="@string/potencia" />
+
+        <Button
+            android:id="@+id/resBt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
             android:layout_marginLeft="1dp"
             android:layout_marginRight="1dp"
             android:onClick="onClick"

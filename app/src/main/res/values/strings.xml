@@ -27,4 +27,6 @@
     <string name="salvar">Salvar</string>
     <string name="chamar_ifsp">Chamar IFSP</string>
     <string name="raiz_quadrada">√</string>
+    <string name="potencia">x^y</string>
+    <string name="pot">^</string>
 </resources>
